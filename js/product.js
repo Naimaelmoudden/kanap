@@ -1,13 +1,23 @@
 const queryString = window.location.search
 const urlParams= new URLSearchParams(queryString)
-const productId =urlParams.get ('id')
+const id =urlParams.get ("id")
+if (id!=null){
+    let dataPrice = 0
+    let altText, imagUrl,nameItem
 
-fetch( `http://localhost:3000/api/products/${productId} ` )
+
+}
+
+fetch( `http://localhost:3000/api/products/${id} ` )
 .then((response ) => response.json())
 .then((res ) => imageData(res))
 //IMAGE//
 function imageData(kanap){
     const{altTxt,colors,description,imageUrl,name,price}=kanap
+    dataPrice=price
+    altText = altTxt
+    nameItem=name
+    imagUrl= imageUrl
     createImage(imageUrl,altTxt)
     createTitle(name)
     createPrice(price)
@@ -41,12 +51,42 @@ function createDescription(description){
 //colors//
 function createColors(colors) {
     const select=document.querySelector('#colors')
-    
-    
     colors.forEach ((colors) => {
     const option=document.createElement("option")
     option.value=colors
     option.textContent=colors
     select.appendChild(option)
    }) 
+}
+const button=document.querySelector ("#addToCart")
+button.addEventListener ("click",clickOrder)
+
+function clickOrder() { 
+    const colors = document.querySelector("#colors").value
+    const quantity= document.querySelector("#quantity").value
+    
+if (isOrderInvalid(colors,quantity)) return
+saveOrder (colors,quantity)
+   redirectionCart()
+  }
+function saveOrder (colors, quantity){
+    const dataPanier = {
+        id: id,
+        colors: colors,
+        quantity: Number(quantity),
+        price: dataPrice,
+        altTxt: altText,
+        imageUrl: imagUrl,
+        name: nameItem,
+    }
+    localStorage.setItem(id ,JSON.stringify (dataPanier )) 
+}
+function isOrderInvalid(colors,quantity) {
+    if (colors == null ||  colors  ===  ""  ||  quantity  ==  null  ||  quantity  ==  0){
+        alert ( "Veuillez sélectionner une couleur et une quantité" )
+        return true
+   }
+}
+function redirectionCart(){
+    window.location.href= "cart.html"
 }
