@@ -3,8 +3,7 @@ const urlParams= new URLSearchParams(queryString)
 const id =urlParams.get ("id")
 if (id!=null){
     let dataPrice = 0
-    let altText, imagUrl,nameItem
-
+    let altText, imagUrl
 
 }
 
@@ -16,7 +15,6 @@ function imageData(kanap){
     const{altTxt,colors,description,imageUrl,name,price}=kanap
     dataPrice=price
     altText = altTxt
-    nameItem=name
     imagUrl= imageUrl
     createImage(imageUrl,altTxt)
     createTitle(name)
@@ -69,7 +67,8 @@ if (isOrderInvalid(colors,quantity)) return
 saveOrder (colors,quantity)
    redirectionCart()
   }
-function saveOrder (colors, quantity){
+function saveOrder (colors, quantity) {
+    const key = `${id}-${colors}`
     const dataPanier = {
         id: id,
         colors: colors,
@@ -77,9 +76,8 @@ function saveOrder (colors, quantity){
         price: dataPrice,
         altTxt: altText,
         imageUrl: imagUrl,
-        name: nameItem,
     }
-    localStorage.setItem(id ,JSON.stringify (dataPanier )) 
+    localStorage.setItem(key ,JSON.stringify (dataPanier )) 
 }
 function isOrderInvalid(colors,quantity) {
     if (colors == null ||  colors  ===  ""  ||  quantity  ==  null  ||  quantity  ==  0){
