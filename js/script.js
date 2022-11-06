@@ -17,16 +17,16 @@ function addProducts(data) {
     const article = document.createElement("article")
 
     // donnée et détail pour l'image::
-    const image= createImage (imageUrl, altTxt)
+    const image = createImage (imageUrl, altTxt)
 
     // donnée et détail dans la balise h3
-    const h3= createH3(name)
+    const h3 = createH3(name)
 
     // donné et détail dans la balise//
     const p = createParagraph(description)
 
     appendElementsArticle(article, image, h3, p)
-    appendAnchorElement(anchorElement, article)
+    appendAnchorElement(anchorElement, article)   
     })
 }  
 // Rattachement des éléments enfants à l'article//
@@ -72,3 +72,4 @@ function createParagraph(description){
     p.classList.add ("productDescription")
     return p
 }
+
